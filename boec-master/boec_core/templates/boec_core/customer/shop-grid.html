@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="BoEC Template">
+    <meta name="keywords" content="BoEC, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BoEC | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/organi/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />    <link rel="stylesheet" href="/static/css/organi/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/organi/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/organi/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/organi/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/organi/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/organi/boec.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Begin -->
+    <!-- Humberger End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> boec@ptit.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                            </div>
+                            {% if user_id %}
+                                <div class="header__top__right__language">
+                                    <div href="#"><i class="fa fa-user"></i> {{ user.first_name}},{{ user.last_name }}</div>
+                                    <span class="arrow_carrot-down"></span>
+                                    <ul>
+                                        <li><a href="/user/logout">Log Out</a></li>
+                                        <li><a href="#">Edit Profile</a></li>
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <div class="header__top__right__language">
+                                    <div href="#"><i class="fa fa-user"></i> Login </div>
+                                    <span class="arrow_carrot-down"></span>
+                                    <ul>
+                                        <li><a href="/user/login">Log In</a></li>
+                                        <li><a href="#">Register</a></li>
+                                    </ul>   
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/boec/customer"><img src="img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="/boec/customer">Trang chủ</a></li>
+                            <li><a href="/boec/shop-grid">Shop</a></li>
+                            <li><a href="#">Trang</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="/boec/shopping-cart">Cart</a></li>
+                                    <li><a href="/boec/checkout">Check out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            {% if user_id %}
+                                <li><a href="/boec/favourite"><i class="fa fa-heart"></i> <span id="favorite_item_count">{{ favorite }}</span></a></li>
+                            {% endif %}
+                            <li><a href="/boec/shopping-cart"><i class="fa fa-shopping-bag"></i> <span id="cart_item_count">{{ cart }}</span></a></li>
+                        </ul>   
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Các Loại Mặt Hàng</span>
+                        </div>
+                        <ul>
+                            <li><a href="#">Sách</a></li>
+                            <li><a href="#">Đồ điện tử</a></li>
+                            <li><a href="#">Quần Áo</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="#">
+                                <input type="text" id="search" placeholder="Bạn cần gì?">
+                                <button type="button" onclick="searchProduct(this)" class="site-btn">Tìm kiếm</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+65 11.188.888</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Organi Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Shop</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-5">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4>Các Loại Mặt Hàng</h4>
+                            <ul>
+                                <li><a href="#">Sách</a></li>
+                                <li><a href="#">Đồ điện tử</a></li>
+                                <li><a href="#">Quần Áo</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-7">
+                    <div class="filter__item">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5">
+                                <div class="filter__sort">
+                                    <span>Sort By</span>
+                                    <select>
+                                        <option value="0">Default</option>
+                                        <option value="0">Default</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                            </div>
+                            <div class="col-lg-4 col-md-3">
+                                <div class="filter__option">
+                                    <span class="icon_grid-2x2"></span>
+                                    <span class="icon_ul"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% for product in selling_products%}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="/static/images/variant/{{product.id}}.jpg">
+                                        <ul class="product__item__pic__hover">
+                                        {% if user_id %}
+                                            <li><a onclick="addProductToFavorite(this)" data-variant_id ="{{product.id}}" data-user_id ="{{user_id.id}}"><i class="fa fa-heart"></i></a></li>
+                                        {% endif %}
+                                        <li><a onclick="addProductToCart(this)" data-variant_id ="{{product.id}}"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="/boec/variant/{{product.id}}">{{product.product.name}}</a></h6>
+                                        <h5>${{product.price}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="product__pagination">
+                        {% if num_pages > 10 %}
+                        <a onclick="searchasd(this)" href="#">&lt</a>
+                        <a onclick="searchasd(this)" href="#">1</a>
+                        <a onclick="searchasd(this)" href="#">2</a>
+                        <a onclick="searchasd(this)" href="#">3</a>
+                        <a onclick="searchasd(this)" href="#">{{num_pages}}</a>
+                        <a onclick="searchasd(this)" href="#">&gt</a></li>
+                        {% else %}
+                        <a href="#">&lt</a>
+                        {% for i in pages %}
+                            <a onclick="searchasd(this)" href="#">{{i}}</a>
+                        {% endfor %}
+                        <a href="#">&gt</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: 60-49 Road 11378 New York</li>
+                            <li>Phone: +65 11.188.888</li>
+                            <li>Email: hello@colorlib.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Useful Links</h6>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">About Our Shop</a></li>
+                            <li><a href="#">Secure Shopping</a></li>
+                            <li><a href="#">Delivery infomation</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Our Sitemap</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="#">Who We Are</a></li>
+                            <li><a href="#">Our Services</a></li>
+                            <li><a href="#">Projects</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Innovation</a></li>
+                            <li><a href="#">Testimonials</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Join Our Newsletter Now</h6>
+                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your mail">
+                            <button type="submit" class="site-btn">Subscribe</button>
+                        </form>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/mixitup.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+
+<script>
+            function addProductToCart(elem) {
+            var id = $(elem).data("variant_id");
+            $.ajax({
+            type: "POST",
+            data: {id: id},
+            url: "/api/cart/add_product_to_cart",
+            success: function (data) {
+                if(data.is_new){
+                    var count = parseInt($("#cart_item_count").text().trim());
+                    $("#cart_item_count").text(count+1)
+                }
+            }
+            })
+        }
+        function addProductToFavorite(elem) {
+            var id = $(elem).data("variant_id");
+            var user = $(elem).data("user_id");
+            $.ajax({
+            type: "POST",
+            data: {id: id, user: user},
+            url: "/api/favorite/add_product_to_favorite",
+            success: function (data) {
+                if(data.is_exist){
+                    var count = parseInt($("#favorite_item_count").text().trim());
+                    $("#favorite_item_count").text(count - 1);
+                }else{
+                    var count = parseInt($("#favorite_item_count").text().trim());
+                    $("#favorite_item_count").text(count + 1);
+                }
+            }
+            })
+        }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{% csrf_token %}
+{% for key, value in form.errors.items %}
+    {{value}}
+{% endfor %}
+  <div class="group-input">
+    <div class="form-group">
+      <label>Username</label>
+      {{form.username|attr:"class:email validation-email js-validation"}}
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      {{form.password|attr:"class:password validation-password js-validation"}}

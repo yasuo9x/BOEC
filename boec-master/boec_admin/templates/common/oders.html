@@ -1,0 +1,149 @@
+{% extends 'common/index.html' %}
+{% block content %}
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                <form role="search" class="navbar-form-custom" action="search_results.html">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                    </div>
+                </form>
+            </div>
+                <ul class="nav navbar-top-links navbar-right">
+                  
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                        </a>
+                       
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                        </a>
+                      
+                    </li>
+    
+    
+                    <li>
+                        <a href="{% url 'logout' %}">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+    
+            </nav>
+            </div>
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-lg-10">
+                        <h2>E-commerce orders</h2>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <strong>Orders</strong>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-2">
+    
+                    </div>
+                </div>
+    
+            <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+    
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+    
+                                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                    <thead>
+                                    <tr>
+    
+                                        <th>Order ID</th>
+                                        <th data-hide="phone">Customer</th>
+                                        <th data-hide="phone">Amount</th>
+                                        <th data-hide="phone">Date added</th>
+                                        
+                                        <th data-hide="phone">Status</th>
+                                        <th class="text-right">Action</th>
+    
+                                    </tr>
+                                    </thead>
+                                    <tbody>     
+                                        {% for item in oders %}                    
+                                    <tr>
+                                        <td>
+                                            {{item.id}}
+                                        </td>
+                                        <td>
+                                            {{item.customer}}
+                                        </td>
+                                        <td>
+                                            
+                                            {{ item.amount }}
+                                        </td>
+                                        <td>
+                                            {{item.create_at|date:"d/ m/ Y"}}
+                                        </td>
+                                        
+                                        {% if item.status == 1 %}
+                                        <td>
+                                            <span class="label label-warning">Đang xử lý</span>
+                                        </td>
+                                        {% elif item.status == 2 %}
+                                        <td>
+                                            <span class="label label-success">Đã tiếp nhận</span>
+                                        </td>
+                                        {% elif item.status == 3 %}
+                                        <td>
+                                            <span class="label label-success">Đang lấy hàng</span>
+                                        </td>
+                                        {% elif item.status == 4 %}
+                                        <td>
+                                            <span class="label label-success">Đang giao hàng</span>
+                                        </td>
+                                        {% elif item.status == 5 %}
+                                        <td>
+                                            <span class="label label-primary">Đã giao</span>
+                                        </td>
+                                        {% else %}
+                                        <td>
+                                            <span class="label label-danger" >Huỷ</span>
+                                        </td>
+                                        {% endif %}
+                                        <td class="text-right">
+                                            <div class="btn-group">
+                                                
+                                                <button class="btn-white btn btn-xs"><a href="{% url 'detail_order' item.id %}">Edit</a></button>
+                                               
+                                            </div>
+                                        </td>
+                                    </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="7">
+                                            <ul class="pagination float-right"></ul>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+    
+            </div>
+          
+    
+            </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends 'common/index.html' %}
+{% block content %}
+<div id="page-wrapper" class="gray-bg">
+    <div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        <form role="search" class="navbar-form-custom" action="search_results.html">
+            <div class="form-group">
+                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+            </div>
+        </form>
+    </div>
+        <ul class="nav navbar-top-links navbar-right">
+            
+            <li class="dropdown">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                </a>      
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                </a>               
+            </li>
+            <li>
+                <a href="login.html">
+                    <i class="fa fa-sign-out"></i> Log out
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+    </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>E-commerce Detail Order</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a>Orders</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>Detail Order</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+
+
+        <div class="row">
+            <div class="col-md-9">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <span class="float-right">(<strong>{{products.count}}</strong>) items</span>
+                        <h5>Items in your cart</h5>
+                    </div>
+                    
+                    <!-- View Item -->
+                    {% for product in products %}
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table shoping-cart-table">
+
+                                <tbody>
+                                <tr>
+                                    <td width="90">
+                                        <div class="cart-product-imitation">
+                                        </div>
+                                    </td>
+                                    <td class="desc">
+                                        <h3>
+                                            <a href="#" class="text-navy">
+                                                {{product.product.product.name}}
+                                            </a>
+                                        </h3>
+                                        <p class="small">
+                                            Page when looking at its layout. The point of using Lorem Ipsum is
+                                        </p>
+                                        <dl class="small m-b-none">
+                                            <dt>Description lists</dt>
+                                            <dd>A description list is perfect for defining terms.</dd>
+                                        </dl>
+
+                                        <div class="m-t-sm">
+                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
+                                            |
+                                            <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        {{product.price}}
+                                    </td>
+                                    <td width="65">
+                                        <input type="text" class="form-control" placeholder="{{product.quantity}}">
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            {% load admin_extras %}
+                                            {{ product.price|mul:product.quantity }}
+                                        </h4>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+                    <div class="ibox-content">
+                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i> <a href="{% url 'list_order' %}">Back</a></button>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Cart Summary</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            Total
+                        </span>
+                        <h2 class="font-bold">
+                            {{ order.0.amount }}
+                        </h2>
+
+                        <hr/>
+                        <span class="text-muted small">
+                            <h2>
+                                {{order.0.recv_name}}
+                            </h2>
+                            <ul class="list-unstyled m-t-md">
+                                <li>
+                                    <span class="fa fa-envelope m-r-xs"></span>
+                                    <label>Email:</label>
+                                    {{order.0.recv_email}}
+                                </li>
+                                <li>
+                                    <span class="fa fa-home m-r-xs"></span>
+                                    <label>Address:</label>
+                                    {{order.0.recv_city}}
+                                </li>
+                                <li>
+                                    <span class="fa fa-phone m-r-xs"></span>
+                                    <label>Contact:</label>
+                                    {{order.0.recv_phone}}
+                                </li>
+                                <li>
+                                    <span class="fa fa-phone m-r-xs"></span>
+                                    <label>Note:</label>
+                                    {{order.0.note}}
+                                </li>
+                                <form action="{% url 'changeStatus' order.0.id%}" method="post">
+                                    {% csrf_token %}
+                                <ul class="todo-list m-t">
+                                    <li>
+                                        <input type="radio" value="1" name="choice" class="i-checks" {% if order.0.status == 1 %} checked {% endif %}/>
+                                        <span class="m-l-xs">Đang xử lý</span>
+                                        
+                                    </li>
+                                    <li>
+                                        <input type="radio" value="2" name="choice" class="i-checks" {% if order.0.status == 2 %} checked {% endif %}/>
+                                        <span class="m-l-xs">Đã tiếp nhận</span>
+                                        
+                                    </li>
+                                    <li>
+                                        <input type="radio" value="3" name="choice" class="i-checks"  {% if order.0.status == 3 %} checked {% endif %}/>
+                                        <span class="m-l-xs">Đang lấy hàng</span>
+                                       
+                                    </li>
+                                    <li>
+                                        <input type="radio" value="4" name="choice" class="i-checks"  {% if order.0.status == 4 %} checked {% endif %}/>
+                                        <span class="m-l-xs">Đang giao hàng</span>
+                                        
+                                    </li>
+                                    <li>
+                                        <input type="radio" value="5" name="choice" class="i-checks"  {% if order.0.status == 5 %} checked {% endif %}/>
+                                        <span class="m-l-xs">Đã giao</span>
+                                        
+                                    </li>
+                                    <li>
+                                        <input type="radio" value="6" name="choice" class="i-checks"  {% if order.0.status == 6 %} checked {% endif %}/>
+                                        <span class="m-l-xs">Huỷ</span>
+                                        
+                                    </li>
+                                </ul>
+
+                            </ul>
+
+                        </span>
+                        <div class="m-t-sm">
+                            <div class="btn-group">
+                            <input type='submit' value="Checkout" class='btn btn-primary btn-sm'>
+                            <a href="{% url 'list_order' %}" class="btn btn-white btn-sm"> Cancel</a>
+                            
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+    </div>
+    
+{% endblock %}
