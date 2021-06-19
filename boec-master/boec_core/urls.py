@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 from django.contrib.auth import views as auth_views
+from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -18,8 +19,8 @@ urlpatterns = [
     path('api/review/add_reply', views.add_reply, name='add_reply'),
     path('boec/shop-grid', views.ShopGridView.as_view(), name="shop_grid"),
     path('api/cart/update_cart', views.update_cart, name='update_cart'),
-
-
+    path('accounts/', include('allauth.urls')),
+    path('admin/', admin.site.urls),
     
     path('edit_profile/',views.edit_profile,name = 'edit_profile'),
     path('signup/',views.signup,name = "signup"),

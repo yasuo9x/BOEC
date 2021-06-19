@@ -2,6 +2,7 @@
 {% load static %}
 {% load widget_tweaks %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
 <html lang="en">
 
 <head>
@@ -89,6 +90,7 @@
                     <div class="signup-image">
                         <figure><img src="/static/images/login_register/signup-image.jpg" alt="sing up image"></figure>
                         <a href="{% url 'main_customer' %}" class="signup-image-link">Về trang chủ</a>
+                        <a href="{% provider_login_url "google" %}" class="signup-image-link">Dang nhap bang Google</a>
                     </div>
                 </div>
             </div>
